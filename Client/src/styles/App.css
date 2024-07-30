@@ -1,0 +1,38 @@
+.App {
+    text-align: center;
+  }
+  
+  .recipe-search {
+    margin: 20px;
+  }
+  
+  .recipe-search input {
+    padding: 10px;
+    width: 300px;
+    margin-right: 10px;
+  }
+  
+  .recipe-search button {
+    padding: 10px 20px;
+  }
+  
+  .recipe-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .recipe-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .recipe-card img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
