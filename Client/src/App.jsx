@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import RecipeSearch from './components/RecipeSearch';
 import RecipeList from './components/RecipeList';
+import Navbar from './components/Navbar';
 import './styles/App.css';
-
 
 const App = () => {
   const [recipes, setRecipes] = useState([]);
@@ -13,9 +13,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Home-Cook</h1>
-      <RecipeSearch onSearchResults={handleSearchResults} />
-      <RecipeList recipes={recipes} />
+      <Navbar />
+      <div className="ui container">
+        {/* <h1>Home-Cook</h1> */}
+        <RecipeSearch onSearchResults={handleSearchResults} />
+        <RecipeList recipes={recipes} />
+      </div>
     </div>
   );
 };

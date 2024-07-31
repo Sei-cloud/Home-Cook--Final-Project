@@ -1,6 +1,6 @@
 import React from 'react';
-import RecipeSearch from '../components/Recipe/RecipeSearch';
-import SignupForm from '../components/SignupForm';
+import RecipeSearch from '../components/RecipeSearch';
+import SignupForm from './Register';
 
 const Home = () => {
   return (
