@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import './styles/App.css';
-// import SavedRecipes from './pages/SavedRecipes'; // Ensure correct import
 import RecipeSearch from './components/RecipeSearch';
 
 // Create a root for the React DOM
@@ -19,10 +18,6 @@ const router = createBrowserRouter([
         index: true,
         element: <RecipeSearch />,
       },
-      // {
-      //   path: '/recipes',
-      //   element: <SavedRecipes />, // Ensure correct component case
-      // },
     ],
   },
 ]);

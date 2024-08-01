@@ -8,12 +8,14 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "cross-fetch": "^3.1.4",
+    "fomantic-ui-css": "^2.9.3",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.12.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.25.1",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "semantic-ui-react": "^2.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
