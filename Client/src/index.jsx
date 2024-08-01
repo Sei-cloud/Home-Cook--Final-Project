@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import './styles/App.css';
 import RecipeSearch from './components/RecipeSearch';
+import Register from './pages/Register';
 
 // Create a root for the React DOM
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <RecipeSearch />,
+      },
+      {
+        path: 'register', // Define the path for the Register component
+        element: <Register />,
       },
     ],
   },

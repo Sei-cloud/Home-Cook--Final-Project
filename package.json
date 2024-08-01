@@ -1,0 +1,19 @@
+{
+  "name": "home-cook--final-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Server/server.js",
+  "scripts": {
+    "start": "node Server/server.js",
+    "develop": "concurrently \"cd Server && npm run dev\" \"cd Client && npm run dev\"",
+    "install": "cd Server && npm i && cd ../Client && npm i",
+    "seed": "cd Server && npm run seed",
+    "build": "cd Client && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
