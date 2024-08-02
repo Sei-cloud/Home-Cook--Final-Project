@@ -1,38 +1,82 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Modal, Form } from 'semantic-ui-react';
+import { useMutation } from '@apollo/client';
+import { REGISTER_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
-const Register = ({ onRegister }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Register = () => {
+  const [formState, setFormState] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  // const [register, { error, data }] = useMutation(REGISTER_USER);
+  const [registerUser, {error, data}] =useMutation (REGISTER_USER)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle registration logic here
-    onRegister();
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+
+    try {
+      const { data } = await registerUser({
+        variables: { ...formState },
+      });
+      console.log (data)
+      Auth.login(data.register.token);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      <div>
-        <label>Username</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Register</button>
-    </form>
+  
+              <Form onSubmit={handleFormSubmit}>
+                <Form.Input
+                  label="Username"
+                  className="form-input"
+                  placeholder="Your username"
+                  name="username"
+                  type="text"
+                  value={formState.username}
+                  onChange={handleChange}
+                />
+                <Form.Input
+                  label="Email"
+                  className="form-input"
+                  placeholder="Your email"
+                  name="email"
+                  type="email"
+                  value={formState.email}
+                  onChange={handleChange}
+                />
+                <Form.Input
+                  label="Password"
+                  className="form-input"
+                  placeholder="******"
+                  name="password"
+                  type="password"
+                  value={formState.password}
+                  onChange={handleChange}
+                />
+                <Button
+                  className="btn btn-block btn-primary"
+                  style={{ cursor: 'pointer' }}
+                  type="submit"
+                >
+                  Submit
+                </Button>
+              </Form>
+            
   );
 };
 

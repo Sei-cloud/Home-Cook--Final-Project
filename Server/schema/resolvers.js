@@ -8,9 +8,19 @@ const resolvers = {
     },
     Mutation: {
       register: async (_, { username, password, email }) => {
-        const user = await User.create({ username, password, email });
+        console.log("made it to resolver")
+        try {
+          const user = await User.create({ username, password, email });
         const token = await signToken (user);
+        console.log(token, user)
         return {token, user};
+        } catch (error) {
+          console.log(error)
+          throw new Error (error)
+        }
+        // const user = await User.create({ username, password, email });
+        // const token = await signToken (user);
+        // return {token, user};
       },
       login: async (_, { username, password }) => {
         const user = await User.findOne({ username });
@@ -26,3 +36,5 @@ const resolvers = {
       }
     }
   };
+
+  module.exports = resolvers;

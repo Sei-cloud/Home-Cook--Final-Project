@@ -1,0 +1,8 @@
+/* url(variables.css) */
+:root {
+    --primary-color: #8BC34A;
+    --secondary-color: #FFC107;
+    --accent-color: #FF5722;
+    --background-color: #F5F5DC;
+    --text-color: #333333;
+  }
