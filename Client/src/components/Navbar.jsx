@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
-import '../styles/Modal.css';
+import 'fomantic-ui-css/semantic.min.css';
 
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
