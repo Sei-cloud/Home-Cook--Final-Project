@@ -3,6 +3,7 @@ import { Button, Modal, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import 'fomantic-ui-css/semantic.min.css';
 import Register from '../pages/Register';
+import Login from '../pages/Login'
 
 const Navbar = () => {
   const [openLogin, setOpenLogin] = useState(false);
@@ -31,6 +32,7 @@ const Navbar = () => {
             <Form.Input label="Password" type="password" />
             <Button type="submit">Login</Button>
           </Form> */}
+          <Login />
         </Modal.Content>
       </Modal>
 

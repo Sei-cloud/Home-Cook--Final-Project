@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Modal, Form } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
 import { REGISTER_USER } from '../utils/mutations';
@@ -11,7 +10,6 @@ const Register = () => {
     email: '',
     password: '',
   });
-  // const [register, { error, data }] = useMutation(REGISTER_USER);
   const [registerUser, {error, data}] =useMutation (REGISTER_USER)
 
   const handleChange = (event) => {

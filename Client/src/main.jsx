@@ -7,6 +7,7 @@ import './styles/variables.css'; // Import the variables CSS file
 import RecipeSearch from './components/RecipeSearch';
 import { Home } from './pages/Home';
 import Register from './pages/Register';
+import Login from './pages/Login';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import 'fomantic-ui-css/semantic.min.css';
 
@@ -26,6 +27,14 @@ const router = createBrowserRouter([
       {
         path: 'register', // Define the path for the Register component
         element: <Register />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        index: true,
+        element: <RecipeSearch />,
       },
       {
         path: 'favorites', // Define the path for the FavoriteRecipes component

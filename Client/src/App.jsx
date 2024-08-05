@@ -39,9 +39,9 @@ const client = new ApolloClient({
 const App = () => {
   const [recipes, setRecipes] = useState([]);
 
-  const handleSearchResults = (results) => {
-    setRecipes(results);
-  };
+  // const handleSearchResults = (results) => {
+  //   setRecipes(results);
+  // };
 
   return (
     <ApolloProvider client={client}>

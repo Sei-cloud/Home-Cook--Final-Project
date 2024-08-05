@@ -1,38 +1,70 @@
 import React, { useState } from 'react';
+import { Button, Modal, Form } from 'semantic-ui-react';
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
-const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Login = () => {
+  const [formState, setFormState] = useState({
+    email: '',
+    password: '',
+  });
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-    onLogin();
+  const [loginUser, { error, data }] = useMutation(LOGIN_USER);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await loginUser({
+        variables: { ...formState },
+      });
+      Auth.login(data.login.token);
+      setModalOpen(false);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <div>
-        <label>Username</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+    <>
+          <Form onSubmit={handleFormSubmit}>
+            <Form.Input
+              label="Email"
+              className="form-input"
+              placeholder="Your email"
+              name="email"
+              type="email"
+              value={formState.email}
+              onChange={handleChange}
+            />
+            <Form.Input
+              label="Password"
+              className="form-input"
+              placeholder="******"
+              name="password"
+              type="password"
+              value={formState.password}
+              onChange={handleChange}
+            />
+            <Button
+              className="btn btn-block btn-primary"
+              style={{ cursor: 'pointer' }}
+              type="submit"
+            >
+              Submit
+            </Button>
+            {error && <div>Login failed</div>}
+          </Form>
+    </>
   );
 };
 
