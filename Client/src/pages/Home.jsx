@@ -3,17 +3,19 @@ import RecipeSearch from '../components/RecipeSearch';
 import SignupForm from './Register';
 import RecipeList from '../components/RecipeList'
 
+
 const Home = () => {
-  const [recipes, setRecipes] = useState ([])
+  const [recipes, setRecipes] = useState([]);
+
   const recipeHandler = (array) => {
-    setRecipes(array)
-  }
+    setRecipes(array);
+  };
+
   return (
     <div>
-      <h1>Home-Cook-Test</h1>
+      <h1>Home-Cook</h1>
       <RecipeSearch recipeHandler={recipeHandler} />
-      
-      {recipes.length && <RecipeList recipes={recipes} />}
+      {recipes.length > 0 && <RecipeList recipes={recipes} />}
     </div>
   );
 };

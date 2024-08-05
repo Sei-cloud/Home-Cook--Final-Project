@@ -8,7 +8,10 @@ const resolvers = {
     message: () => 'Hello, world!',
     user: async (_, { username }) => {
       return User.findOne({ username }).populate('favoriteRecipes');
-    }
+    },
+    userRecipes: async (_, { userId }) => {
+      return Recipe.find({ createdBy: userId });
+    },
   },
   Mutation: {
     register: async (_, { username, password, email }) => {
@@ -41,17 +44,37 @@ const resolvers = {
         return user
       } catch (error) {
         throw new Error(error)
-      }
+      } 
       
     },
     removeFavoriteRecipe: async (_, { recipeId }, context) => {
       if (!context.user) {
         throw authorizationError;
       }
-      const user = await User.findById(context.user._id);
-      user.favoriteRecipes.pull(recipeId);
-      await user.save();
-      return user.populate('favoriteRecipes');
+      try {
+        const user = await User.findByIdAndUpdate(
+          context.user._id,
+          { $pull: { favoriteRecipes: recipeId }},
+          { new: true }
+        );
+        return user;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    },
+    addUserRecipe: async (_, { recipeData }, context) => {
+      if (!context.user) {
+        throw authorizationError;
+      }
+      try {
+        const recipe = await Recipe.create({
+          ...recipeData,
+          createdBy: context.user._id
+        });
+        return recipe;
+      } catch (error) {
+        throw new Error(error);
+      }
     }
   }
 };

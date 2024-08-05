@@ -11,11 +11,11 @@ const RecipeCard = ({ recipe, isFavorite, refetch }) => {
   const handleAddFavorite = async () => {
     try {
       const recipeData = {
-        name: recipe.strMeal,
-        ingredients: [],
-        instructions: recipe.strInstructions,
-        imageUrl: recipe.strMealThumb,
-        sourceUrl: recipe.strSource
+        name: recipe.strMeal || recipe.name,
+        ingredients: recipe.ingredients || [],
+        instructions: recipe.strInstructions || recipe.instructions,
+        imageUrl: recipe.strMealThumb || recipe.imageUrl,
+        sourceUrl: recipe.strSource || recipe.sourceUrl,
       }
       if (!Auth.loggedIn()) {
         return;
@@ -37,8 +37,8 @@ const RecipeCard = ({ recipe, isFavorite, refetch }) => {
       if (!Auth.loggedIn()) {
         return;
       }
-      await removeFavoriteRecipe({
-        variables: { recipeId: recipe.idMeal },
+      const { data } = await removeFavoriteRecipe({
+        variables: { recipeId: recipe._id },
       });
       alert('Recipe removed from favorites!');
       if (refetch) refetch();
@@ -50,10 +50,10 @@ const RecipeCard = ({ recipe, isFavorite, refetch }) => {
 
   return (
     <div className="recipe-card">
-      <h2>{recipe.strMeal}</h2>
-      <img src={recipe.strMealThumb} alt={recipe.strMeal} />
+      <h2>{recipe.strMeal || recipe.name}</h2>
+      <img src={recipe.strMealThumb || recipe.imageUrl} alt={recipe.strMeal || recipe.name} />
       <p>
-        <a href={recipe.strSource} target="_blank" rel="noopener noreferrer">
+        <a href={recipe.strSource || recipe.sourceUrl} target="_blank" rel="noopener noreferrer">
           Recipe Source
         </a>
       </p>

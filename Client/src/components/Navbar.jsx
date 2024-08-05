@@ -11,27 +11,32 @@ const Navbar = () => {
 
   return (
     <div className="ui menu">
-      <div className="header item">Home-Cook</div>
-      <div className="right menu">
-        <div className="item">
-          <Link to="/favorites">Favorites</Link>
-        </div>
-        <div className="item">
-          <Button onClick={() => setOpenLogin(true)}>Login</Button>
-        </div>
-        <div className="item">
-          <Button onClick={() => setOpenRegister(true)}>Register</Button>
-        </div>
+    <div className="item">
+      <Button as={Link} to="/" basic>
+        Home-Cook
+      </Button>
+    </div>
+    <div className="right menu">
+      <div className="item">
+        <Button as={Link} to="/favorites">Favorites</Button>
       </div>
+      <div className="item">
+          <Button as={Link}to="/add-recipe">Add Recipe</Button> 
+        </div>
+        <div className="item">
+          <Button as={Link} to="/added-recipes">My Recipes</Button> 
+        </div>
+      <div className="item">
+        <Button onClick={() => setOpenLogin(true)}>Login</Button>
+      </div>
+      <div className="item">
+        <Button onClick={() => setOpenRegister(true)}>Register</Button>
+      </div>
+    </div>
 
       <Modal open={openLogin} onClose={() => setOpenLogin(false)}>
         <Modal.Header>Login</Modal.Header>
         <Modal.Content>
-          {/* <Form>
-            <Form.Input label="Email" type="email" />
-            <Form.Input label="Password" type="password" />
-            <Button type="submit">Login</Button>
-          </Form> */}
           <Login />
         </Modal.Content>
       </Modal>
@@ -39,12 +44,6 @@ const Navbar = () => {
       <Modal open={openRegister} onClose={() => setOpenRegister(false)}>
         <Modal.Header>Register</Modal.Header>
         <Modal.Content>
-          {/* <Form>
-            <Form.Input label="Email" type="email" />
-            <Form.Input label="Password" type="password" />
-            <Form.Input label="Confirm Password" type="password" />
-            <Button type="submit">Register</Button>
-          </Form> */}
           <Register />
         </Modal.Content>
       </Modal>

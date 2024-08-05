@@ -13,6 +13,7 @@ const typeDefs =`
     instructions: String
     imageUrl: String
     sourceUrl: String
+    createdBy: User
   }
 
     input RecipeInput {
@@ -31,6 +32,7 @@ const typeDefs =`
   type Query {
     message: String
     user(username: String!): User
+     userRecipes(userId: ID!): [Recipe]
   }
 
   type Mutation {
@@ -38,6 +40,7 @@ const typeDefs =`
     login(username: String!, password: String!): Auth
     addFavoriteRecipe(recipeData: RecipeInput!): User
     removeFavoriteRecipe(recipeId: ID!): User
+    addUserRecipe(recipeData: RecipeInput!): Recipe
   }
 `;
 
