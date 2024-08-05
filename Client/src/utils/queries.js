@@ -17,3 +17,13 @@ export const QUERY_USER = gql`
     }
   }
 `;
+export const QUERY_USER_RECIPES = gql`
+  query userRecipes($userId: ID!) {
+    userRecipes(userId: $userId) {
+      _id
+      name
+      ingredients
+      instructions
+    }
+  }
+`;

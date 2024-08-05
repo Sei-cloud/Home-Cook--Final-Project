@@ -43,13 +43,25 @@ export const REMOVE_FAVORITE_RECIPE = gql`
   mutation removeFavoriteRecipe($recipeId: ID!) {
     removeFavoriteRecipe(recipeId: $recipeId) {
       _id
+      email
+      username
       favoriteRecipes {
         _id
-        name
-        ingredients
-        instructions
-        imageUrl
-        sourceUrl
+      }
+    }
+  }
+`;
+
+export const ADD_USER_RECIPE = gql`
+  mutation addUserRecipe($recipeData: RecipeInput!) {
+    addUserRecipe(recipeData: $recipeData) {
+      _id
+      name
+      ingredients
+      instructions
+      createdBy {
+        _id
+        username
       }
     }
   }
