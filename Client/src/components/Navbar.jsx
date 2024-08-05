@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import 'fomantic-ui-css/semantic.min.css';
 import Register from '../pages/Register';
 
@@ -12,6 +13,9 @@ const Navbar = () => {
       <div className="header item">Home-Cook</div>
       <div className="right menu">
         <div className="item">
+          <Link to="/favorites">Favorites</Link>
+        </div>
+        <div className="item">
           <Button onClick={() => setOpenLogin(true)}>Login</Button>
         </div>
         <div className="item">
@@ -22,11 +26,11 @@ const Navbar = () => {
       <Modal open={openLogin} onClose={() => setOpenLogin(false)}>
         <Modal.Header>Login</Modal.Header>
         <Modal.Content>
-          <Form>
+          {/* <Form>
             <Form.Input label="Email" type="email" />
             <Form.Input label="Password" type="password" />
             <Button type="submit">Login</Button>
-          </Form>
+          </Form> */}
         </Modal.Content>
       </Modal>
 

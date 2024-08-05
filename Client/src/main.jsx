@@ -5,7 +5,9 @@ import App from './App';
 import './styles/App.css';
 import './styles/variables.css'; // Import the variables CSS file
 import RecipeSearch from './components/RecipeSearch';
+import { Home } from './pages/Home';
 import Register from './pages/Register';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 import 'fomantic-ui-css/semantic.min.css';
 
 // Create a root for the React DOM
@@ -19,11 +21,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <RecipeSearch />,
+        element: <Home />,
       },
       {
         path: 'register', // Define the path for the Register component
         element: <Register />,
+      },
+      {
+        path: 'favorites', // Define the path for the FavoriteRecipes component
+        element: <FavoriteRecipes />,
       },
     ],
   },

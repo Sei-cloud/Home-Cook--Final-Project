@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { searchRecipes } from '../utils/api';
 
-const RecipeSearch = ({ onSearchResults }) => {
+const RecipeSearch = ({ recipeHandler }) => {
   const [query, setQuery] = useState('');
 
   const handleSearch = async () => {
     if (query.trim() === '') return;
     const results = await searchRecipes(query);
-    onSearchResults(results);
+    console.log(recipeHandler)
+    recipeHandler(results);
   };
 
   return (

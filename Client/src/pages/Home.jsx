@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RecipeSearch from '../components/RecipeSearch';
 import SignupForm from './Register';
+import RecipeList from '../components/RecipeList'
 
 const Home = () => {
+  const [recipes, setRecipes] = useState ([])
+  const recipeHandler = (array) => {
+    setRecipes(array)
+  }
   return (
     <div>
       <h1>Home-Cook-Test</h1>
-      <RecipeSearch />
+      <RecipeSearch recipeHandler={recipeHandler} />
       
-      {}
+      {recipes.length && <RecipeList recipes={recipes} />}
     </div>
   );
 };
