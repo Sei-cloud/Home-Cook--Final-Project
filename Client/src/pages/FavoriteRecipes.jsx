@@ -16,6 +16,12 @@ const FavoriteRecipes = () => {
     }
   }, [data]);
 
+  const handleRemoveFavorite = (recipeId) => {
+    setFavoriteRecipes((prevFavorites) =>
+      prevFavorites.filter((recipe) => recipe._id !== recipeId)
+    );
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -25,7 +31,13 @@ const FavoriteRecipes = () => {
       <h1>Your Favorite Recipes</h1>
       <div className="recipe-list">
         {favoriteRecipes.map((recipe) => (
-          <RecipeCard key={recipe._id} recipe={recipe} isFavorite={true} refetch={refetch} />
+          <RecipeCard
+            key={recipe._id}
+            recipe={recipe}
+            isFavorite={true}
+            refetch={refetch}
+            onRemoveFavorite={handleRemoveFavorite}
+          />
         ))}
       </div>
     </div>

@@ -4,7 +4,7 @@ import { ADD_FAVORITE_RECIPE, REMOVE_FAVORITE_RECIPE } from '../utils/mutations'
 import Auth from '../utils/auth';
 import { Button, Modal } from 'semantic-ui-react';
 
-const RecipeCard = ({ recipe, isFavorite, refetch }) => {
+const RecipeCard = ({ recipe, isFavorite, refetch, onRemoveFavorite }) => {
   const [addFavoriteRecipe, { error: addRecipeError }] = useMutation(ADD_FAVORITE_RECIPE);
   const [removeFavoriteRecipe, { error: removeRecipeError }] = useMutation(REMOVE_FAVORITE_RECIPE);
   const [showMessage, setShowMessage] = useState(false);
@@ -44,6 +44,7 @@ const RecipeCard = ({ recipe, isFavorite, refetch }) => {
         variables: { recipeId: recipe._id },
       });
       alert('Recipe removed from favorites!');
+      onRemoveFavorite(recipe._id);
       if (refetch) refetch();
     } catch (e) {
       console.error(e);
@@ -60,9 +61,11 @@ const RecipeCard = ({ recipe, isFavorite, refetch }) => {
           Recipe Source
         </a>
       </p>
-      <Button onClick={handleAddFavorite}>
-        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
-      </Button>
+      {isFavorite ? (
+        <Button onClick={handleRemoveFavorite}>Remove from Favorites</Button>
+      ) : (
+        <Button onClick={handleAddFavorite}>Add to Favorites</Button>
+      )}
 
       <Modal open={showMessage} onClose={() => setShowMessage(false)}>
         <Modal.Header>Login Required</Modal.Header>

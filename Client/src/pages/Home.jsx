@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import RecipeSearch from '../components/RecipeSearch';
 import SignupForm from './Register';
-import RecipeList from '../components/RecipeList'
-import '../styles/styles.css'
-
+import RecipeList from '../components/RecipeList';
+import '../styles/styles.css';
+import Auth from '../utils/auth'; // Import the Auth utility
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -18,15 +18,17 @@ const Home = () => {
         <div className="hero-content">
           <h1>Welcome to Home-Cook</h1>
           <p>Discover and save your favorite recipes, or share your own culinary creations!</p>
-          <button className="hero-button" onClick={() => window.location.href = '/register'}>
-            Sign Up Now
-          </button>
+          {!Auth.loggedIn() && ( // Conditionally render the button
+            <button className="hero-button" onClick={() => window.location.href = '/register'}>
+              Sign Up Now
+            </button>
+          )}
         </div>
       </div>
       <div>
-      <h1>Find your new favorite recipe!</h1>
-      <RecipeSearch recipeHandler={recipeHandler} />
-      {recipes.length > 0 && <RecipeList recipes={recipes} />}
+        <h1>Find your new favorite recipe!</h1>
+        <RecipeSearch recipeHandler={recipeHandler} />
+        {recipes.length > 0 && <RecipeList recipes={recipes} />}
       </div>
     </div>
   );
@@ -34,7 +36,7 @@ const Home = () => {
 
 const Signup = () => {
   return (
-    <div className="App"> {/* Apply only the App class here */}
+    <div className="App"> 
       <h1>Home-Cook</h1>
       <SignupForm />
     </div>
