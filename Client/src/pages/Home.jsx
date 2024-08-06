@@ -13,7 +13,7 @@ const Home = () => {
   };
 
   return (
-    <div className="App home-page"> {/* Apply both App and home-page classes here */}
+    <div className="App home-page container"> {/* Apply both App and home-page classes here */}
       <div className="hero-banner">
         <div className="hero-content">
           <h1>Welcome to Home-Cook</h1>
