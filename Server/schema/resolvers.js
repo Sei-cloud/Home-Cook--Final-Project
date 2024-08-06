@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const {signToken, authorizationError} = require ('../middleware/auth');
 const User = require ('../models/User');
 const Recipe = require('../models/Recipe');
-
 const resolvers = {
   Query: {
     message: () => 'Hello, world!',
@@ -37,15 +36,14 @@ const resolvers = {
       }
       try {
         const recipe = await Recipe.create (recipeData)
-        const user = await User.findByIdAndUpdate(context.user._id, 
+        const user = await User.findByIdAndUpdate(context.user._id,
           {$push: {favoriteRecipes:recipe._id}},
           {new:true}
         );
         return user
       } catch (error) {
         throw new Error(error)
-      } 
-      
+      }
     },
     removeFavoriteRecipe: async (_, { recipeId }, context) => {
       if (!context.user) {
@@ -66,17 +64,23 @@ const resolvers = {
       if (!context.user) {
         throw authorizationError;
       }
-      try {
-        const recipe = await Recipe.create({
-          ...recipeData,
-          createdBy: context.user._id
-        });
-        return recipe;
-      } catch (error) {
-        throw new Error(error);
+      const recipe = await Recipe.create({
+        ...recipeData,
+        createdBy: context.user._id,
+      });
+      return recipe;
+    },
+    updateUser: async (_, { username, email }, context) => {
+      if (!context.user) {
+        throw authorizationError;
       }
-    }
-  }
+      const updatedUser = await User.findByIdAndUpdate(
+        context.user._id,
+        { username, email },
+        { new: true }
+      );
+      return updatedUser;
+    },
+  },
 };
-
 module.exports = resolvers;

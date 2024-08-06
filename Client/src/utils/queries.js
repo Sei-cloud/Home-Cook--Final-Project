@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
@@ -17,6 +16,15 @@ export const QUERY_USER = gql`
     }
   }
 `;
+export const UPDATE_USER = gql`
+  mutation updateUser($username: String!, $email: String!) {
+    updateUser(username: $username, email: $email) {
+      _id
+      username
+      email
+    }
+  }
+`;
 export const QUERY_USER_RECIPES = gql`
   query userRecipes($userId: ID!) {
     userRecipes(userId: $userId) {
@@ -27,3 +35,12 @@ export const QUERY_USER_RECIPES = gql`
     }
   }
 `;
+
+
+
+
+
+
+
+
+
