@@ -55,7 +55,7 @@ const Profile = () => {
   };
 
   return (
-    <Container>
+    <Container className="profile-page-background">
       <div className="hero-banner">
         <div className="hero-content">
           <h1>Profile Page</h1>
@@ -63,47 +63,51 @@ const Profile = () => {
         </div>
       </div>
       <h1>Profile</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Field>
-          <label>Username</label>
-          <Input
-            type="text"
-            name="username"
-            value={userData.username}
-            onChange={handleChange}
-            disabled={editMode}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Email</label>
-          <Input
-            type="email"
-            name="email"
-            value={userData.email}
-            onChange={handleChange}
-            disabled={editMode}
-          />
-        </Form.Field>
-        {!editMode ? (
-          <Button type="submit" primary>
-            Save
-          </Button>
-        ) : (
-        <br />
-        )}
-      </Form>
-      {editMode && ( <Button type="button" onClick={handleEditClick}>
-            Edit
-          </Button>)}
+      <div className="profile-form-content">
+        <Form onSubmit={handleSubmit} className="profile-form-container">
+          <Form.Field>
+            <label className="profile-form-label">Username</label>
+            <Input
+              type="text"
+              name="username"
+              value={userData.username}
+              onChange={handleChange}
+              disabled={editMode}
+              className="profile-form-input"
+            />
+          </Form.Field>
+          <Form.Field>
+            <label className="profile-form-label">Email</label>
+            <Input
+              type="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              disabled={editMode}
+              className="profile-form-input"
+            />
+          </Form.Field>
+          {!editMode ? (
+            <Button type="submit" primary>
+              Save
+            </Button>
+          ) : (
+          <br />
+          )}
+        </Form>
+        {editMode && ( <Button type="button" onClick={handleEditClick}>
+              Edit
+            </Button>)}
+      </div>
       <div>
       <br />
         <Button as={Link} to="/add-recipe" primary>
           Add Recipe
         </Button>
-        <Button as={Link} to="/added-recipes" secondary>
+        <Button as={Link} to="/added-recipes" primary>
           My Recipes
         </Button>
-        <Button as={Link} to="/favorites" secondary>
+        <Button as={Link} to="/favorites" primary>
           Favorites
         </Button>
         <Button as={Link} to="/" secondary>
