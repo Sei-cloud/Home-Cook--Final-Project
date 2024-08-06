@@ -19,12 +19,12 @@ export const LOGIN_USER = gql`
       token
       user {
         _id
-        email
         username
       }
     }
   }
 `;
+
 
 export const ADD_FAVORITE_RECIPE = gql`
   mutation AddFavoriteRecipe($recipeData: RecipeInput!) {

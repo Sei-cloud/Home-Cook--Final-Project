@@ -7,9 +7,10 @@ import './styles/variables.css'; // Import the variables CSS file
 import RecipeSearch from './components/RecipeSearch';
 import { Home } from './pages/Home';
 import Register from './pages/Register';
+import ProfilePage from './pages/ProfilePage';
 import Login from './pages/Login';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-import AddRecipe from './pages/AddRecipe';
+import AddRecipe from './components/AddRecipe';
 import AddedRecipes from './pages/AddedRecipes';
 import 'fomantic-ui-css/semantic.min.css';
 
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: 'added-recipes', // Define the path for the AddedRecipes component
         element: <AddedRecipes />,
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />,
       },
     ],
   },
