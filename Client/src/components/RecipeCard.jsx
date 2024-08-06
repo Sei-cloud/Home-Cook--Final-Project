@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_FAVORITE_RECIPE, REMOVE_FAVORITE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { Button, Modal } from 'semantic-ui-react';
 
 const RecipeCard = ({ recipe, isFavorite, refetch }) => {
-  const [addFavoriteRecipe, {error: addRecipeError}] = useMutation(ADD_FAVORITE_RECIPE);
-  const [removeFavoriteRecipe, {error: removeRecipeError}] = useMutation(REMOVE_FAVORITE_RECIPE);
-  // console.log(recipe)
+  const [addFavoriteRecipe, { error: addRecipeError }] = useMutation(ADD_FAVORITE_RECIPE);
+  const [removeFavoriteRecipe, { error: removeRecipeError }] = useMutation(REMOVE_FAVORITE_RECIPE);
+  const [showMessage, setShowMessage] = useState(false);
 
   const handleAddFavorite = async () => {
     try {
+      if (!Auth.loggedIn()) {
+        setShowMessage(true);
+        return;
+      }
       const recipeData = {
         name: recipe.strMeal || recipe.name,
         ingredients: recipe.ingredients || [],
         instructions: recipe.strInstructions || recipe.instructions,
         imageUrl: recipe.strMealThumb || recipe.imageUrl,
         sourceUrl: recipe.strSource || recipe.sourceUrl,
-      }
-      if (!Auth.loggedIn()) {
-        return;
-      }
-      const {data} = await addFavoriteRecipe({
-        variables: { recipeData: recipeData },
+      };
+      const { data } = await addFavoriteRecipe({
+        variables: { recipeData },
       });
-      console.log(data)
+      console.log(data);
       alert('Recipe added to favorites!');
       if (refetch) refetch();
     } catch (e) {
@@ -35,6 +37,7 @@ const RecipeCard = ({ recipe, isFavorite, refetch }) => {
   const handleRemoveFavorite = async () => {
     try {
       if (!Auth.loggedIn()) {
+        setShowMessage(true);
         return;
       }
       const { data } = await removeFavoriteRecipe({
@@ -57,11 +60,21 @@ const RecipeCard = ({ recipe, isFavorite, refetch }) => {
           Recipe Source
         </a>
       </p>
-      {isFavorite ? (
-        <button onClick={handleRemoveFavorite}>Remove from Favorites</button>
-      ) : (
-        <button onClick={handleAddFavorite}>Add to Favorites</button>
-      )}
+      <Button onClick={handleAddFavorite}>
+        {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+      </Button>
+
+      <Modal open={showMessage} onClose={() => setShowMessage(false)}>
+        <Modal.Header>Login Required</Modal.Header>
+        <Modal.Content>
+          <p>You need to be logged in to add or remove recipes from favorites.</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="red" onClick={() => setShowMessage(false)}>
+            Close
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </div>
   );
 };
