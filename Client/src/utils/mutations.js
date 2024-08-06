@@ -20,11 +20,11 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+        email
       }
     }
   }
 `;
-
 
 export const ADD_FAVORITE_RECIPE = gql`
   mutation AddFavoriteRecipe($recipeData: RecipeInput!) {
@@ -59,10 +59,20 @@ export const ADD_USER_RECIPE = gql`
       name
       ingredients
       instructions
+      imageUrl
       createdBy {
         _id
         username
       }
+    }
+  }
+`;
+
+export const DELETE_USER_RECIPE = gql`
+  mutation deleteUserRecipe($recipeId: ID!) {
+    deleteUserRecipe(recipeId: $recipeId) {
+      _id
+      name
     }
   }
 `;

@@ -28,11 +28,11 @@ const typeDefs =`
   type Query {
     message: String
     user(username: String!): User
-     userRecipes(userId: ID!): [Recipe]
+     userRecipes: [Recipe]
   }
   type Mutation {
     register(username: String!, password: String!, email: String!): Auth
-    login(username: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
     addFavoriteRecipe(recipeData: RecipeInput!): User
     removeFavoriteRecipe(recipeId: ID!): User
     addUserRecipe(recipeData: RecipeInput!): Recipe

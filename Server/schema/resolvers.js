@@ -8,9 +8,12 @@ const resolvers = {
     user: async (_, { username }) => {
       return User.findOne({ username }).populate('favoriteRecipes');
     },
-    userRecipes: async (_, { userId }) => {
-      return Recipe.find({ createdBy: userId });
+    userRecipes: async (_, args, context) => {
+      return Recipe.find({ createdBy: context.user._id });
     },
+    // userRecipes: async (_, { userId }) => {
+    //   return Recipe.find({ createdBy: userId });
+    // },
   },
   Mutation: {
     register: async (_, { username, password, email }) => {
@@ -18,8 +21,8 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    login: async (_, { username, password }) => {
-      const user = await User.findOne({ username });
+    login: async (_, { email, password }) => {
+      const user = await User.findOne({ email });
       if (!user) {
         throw new Error('User not found');
       }
@@ -50,6 +53,7 @@ const resolvers = {
         throw authorizationError;
       }
       try {
+        const recipe = await Recipe.findByIdAndDelete( recipeId )
         const user = await User.findByIdAndUpdate(
           context.user._id,
           { $pull: { favoriteRecipes: recipeId }},

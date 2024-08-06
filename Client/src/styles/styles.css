@@ -1,0 +1,153 @@
+/* url(styles.css) */
+:root {
+    --primary-color: #C7EDE4;
+    --secondary-color: #5B5941 ;
+    --accent-color: #CC978E;
+    --background-color:#C7EDE4;
+    --text-color: #247BA0;
+    }
+
+    /* html, body {
+        height: 100%;
+        margin: 0;
+        background-color: var(--primary-color);
+    } */
+    
+   
+
+    .container
+    {
+        text-align: center;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        padding: 0px 20px 20px 20px;
+        min-height: 100vh; /* Ensure it takes the full height of the viewport */
+    }
+
+    
+    /* Home Page Specific Styles */
+    .home-page {
+        background-image: url('/home-page-stock.jpg'); /* Add the background image */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height:100vh;
+    }
+    
+    .recipe-search {
+        margin: 20px;
+    }
+    
+    .recipe-search input {
+        padding: 10px;
+        width: 300px;
+        margin-right: 10px;
+        border: 1px solid var(--accent-color);
+        border-radius: 4px;
+        background-color: white; /* Ensure the search bar input background is white */
+    }
+    
+    .recipe-search button {
+        padding: 10px 20px;
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .recipe-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .recipe-card {
+        border: 1px solid var(--primary-color);
+        border-radius: 8px;
+        margin: 10px;
+        padding: 20px;
+        width: 200px;
+        text-align: center;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .recipe-card img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+    
+    .alert {
+        background-color: var(--accent-color);
+        color: white;
+        padding: 10px;
+        border-radius: 4px;
+    }
+    
+    .hero-banner {
+        text-align: center;
+        color: var(--text-color);
+        background-color: var(--primary-color);
+        padding: 50px 20px;
+        margin-bottom: 20px;
+    }
+    
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .hero-content h1 {
+        font-size: 3em;
+        margin: 0;
+    }
+    
+    .hero-content p {
+        font-size: 1.5em;
+        margin: 10px 0 20px 0;
+    }
+    
+    .hero-button {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    
+    .hero-button:hover {
+        background-color: var(--secondary-color);
+    }
+    
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .modal {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        position: relative;
+        min-width: 300px;
+    }
+    
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    
