@@ -24,9 +24,13 @@ const Login = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Log the form state to check the payload being sent
+      console.log(formState);
+
       const { data } = await loginUser({
         variables: { ...formState },
       });
+      console.log(data); // Log the response data
       Auth.login(data.login.token);
       navigate('/profile'); // Redirect to profile page after login
     } catch (e) {

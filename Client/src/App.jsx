@@ -10,7 +10,7 @@ import { Outlet } from 'react-router-dom';
 import RecipeSearch from './components/RecipeSearch';
 import RecipeList from './components/RecipeList';
 import Navbar from './components/Navbar';
-import './styles/App.css';
+import './styles/styles.css';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -47,7 +47,7 @@ const App = () => {
     <ApolloProvider client={client}>
     <div className="App">
       <Navbar />
-      <div className="ui container">
+      <div className="container">
         {/* <h1>Home-Cook</h1> */}
         {/* <RecipeSearch onSearchResults={handleSearchResults} />
         <RecipeList recipes={recipes} /> */}

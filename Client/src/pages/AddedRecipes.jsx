@@ -5,16 +5,18 @@ import MyFavorites from '../components/MyFavorites'
 import Auth from '../utils/auth';
 
 const AddedRecipes = () => {
-  const { loading, data } = useQuery(QUERY_USER_RECIPES, {
-    variables: { userId: Auth.getProfile().data._id },
-  });
+  const { loading, data, refetch } = useQuery(QUERY_USER_RECIPES);
+  // const { loading, data } = useQuery(QUERY_USER_RECIPES, {
+  //   variables: { userId: Auth.getProfile().data._id },
+  // });
   const [userRecipes, setUserRecipes] = useState([]);
 
   useEffect(() => {
+    refetch()
     if (data) {
       setUserRecipes(data.userRecipes);
     }
-  }, [data]);
+  }, );
 
   if (loading) {
     return <div>Loading...</div>;
@@ -25,7 +27,7 @@ const AddedRecipes = () => {
       <h1>Your Added Recipes</h1>
       <div className="recipe-list">
         {userRecipes.map((recipe) => (
-          <MyFavorites key={recipe._id} recipe={recipe} />
+          <MyFavorites key={recipe._id} recipe={recipe} refetch = {refetch} />
         ))}
       </div>
     </div>
