@@ -5,11 +5,13 @@ import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const Login = () => {
+    // State to manage form input values
   const [formState, setFormState] = useState({
     email: '',
     password: '',
   });
   const [loginUser, { error }] = useMutation(LOGIN_USER);
+    // State to manage the visibility of the error modal
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleChange = (event) => {

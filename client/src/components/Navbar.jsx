@@ -21,15 +21,6 @@ const Navbar = () => {
         {/* Show these buttons only if the user is logged in */}
         {Auth.loggedIn() ? (
           <>
-          {/* //   <div className="item">
-          //     <Button as={Link} to="/favorites">Favorites</Button>
-          //   </div>
-          //   <div className="item">
-          //     <Button as={Link} to="/add-recipe">Add Recipe</Button>
-          //   </div>
-          //   <div className="item">
-          //     <Button as={Link} to="/added-recipes">My Recipes</Button>
-          //   </div> */}
             <div className="item">
               <Button as={Link} to="/profile">Profile</Button>
             </div>

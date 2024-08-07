@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Form, Button, Message, Container } from 'semantic-ui-react';
 import { ADD_USER_RECIPE } from '../utils/mutations';
-import Auth from '../utils/auth';
 
 const AddRecipe = () => {
   const [formState, setFormState] = useState({

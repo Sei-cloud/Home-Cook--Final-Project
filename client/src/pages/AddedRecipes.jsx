@@ -6,9 +6,9 @@ import Auth from '../utils/auth';
 
 const AddedRecipes = () => {
   const { loading, data, refetch } = useQuery(QUERY_USER_RECIPES);
-  // const { loading, data } = useQuery(QUERY_USER_RECIPES, {
-  //   variables: { userId: Auth.getProfile().data._id },
-  // });
+
+  //   removed this line: variables: { userId: Auth.getProfile().data._id },
+
   const [userRecipes, setUserRecipes] = useState([]);
 
   useEffect(() => {

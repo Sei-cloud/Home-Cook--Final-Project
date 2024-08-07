@@ -5,7 +5,7 @@ import { QUERY_USER, UPDATE_USER } from '../utils/queries';
 import { DELETE_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { Button, Container, Form, Input, Modal } from 'semantic-ui-react';
-import '../styles/styles.css'; // Importing the styles.css file for all styling
+import '../styles/styles.css'; 
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ const Profile = () => {
   };
 
   return (
-    <Container className="profile-page-background">
+    <Container fluid className="profile-page-background">
       <div className="hero-banner">
         <div className="hero-content">
           <h1>Profile Page</h1>

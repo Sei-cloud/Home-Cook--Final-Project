@@ -5,16 +5,19 @@ import Auth from '../utils/auth';
 import { Button, Modal } from 'semantic-ui-react';
 
 const RecipeCard = ({ recipe, isFavorite, refetch, onRemoveFavorite }) => {
+    // useMutation hooks to add or remove a favorite recipe
   const [addFavoriteRecipe, { error: addRecipeError }] = useMutation(ADD_FAVORITE_RECIPE);
   const [removeFavoriteRecipe, { error: removeRecipeError }] = useMutation(REMOVE_FAVORITE_RECIPE);
   const [showMessage, setShowMessage] = useState(false);
 
   const handleAddFavorite = async () => {
     try {
+      // If user is not logged in, show message and stop
       if (!Auth.loggedIn()) {
         setShowMessage(true);
         return;
       }
+      // Create an object with recipe data
       const recipeData = {
         name: recipe.strMeal || recipe.name,
         ingredients: recipe.ingredients || [],
@@ -27,6 +30,7 @@ const RecipeCard = ({ recipe, isFavorite, refetch, onRemoveFavorite }) => {
       });
       console.log(data);
       alert('Recipe added to favorites!');
+      // Refresh data if refetch function is provided, allows page to refresh promptly for user
       if (refetch) refetch();
     } catch (e) {
       console.error(e);

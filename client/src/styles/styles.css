@@ -1,4 +1,3 @@
-/* url(styles.css) */
 :root {
   --primary-color: #c7ede4;
   --secondary-color: #5b5941;
@@ -12,13 +11,13 @@
   background-color: var(--background-color);
   color: var(--text-color);
   padding: 0px 2px 2px 2px;
-  min-height: 100vh; /* Ensure it takes the full height of the viewport */
+  min-height: 100vh; 
 }
 
-/* Home Page Specific Styles */
+
 .home-page {
   flex-grow: 1;
-  background-image: url("/home-page-stock.jpg"); /* Add the background image */
+  background-image: url("/home-page-stock.jpg"); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -38,7 +37,7 @@
   margin-right: 10px;
   border: 1px solid var(--accent-color);
   border-radius: 4px;
-  background-color: white; /* Ensure the search bar input background is white */
+  background-color: white; 
 }
 
 .recipe-search button {
@@ -79,45 +78,44 @@
 }
 
 .profile-page-background {
-  flex-grow: 1;
-    background-image: url('/profile-page-stock.jpg'); /* Replace with your image path */
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-   align-items: center;
-   justify-content: center;
-    min-height: 100vh; /* Ensure it takes the full height of the viewport */
-    padding: 20px; /* Add some padding if needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/profile-page-stock.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px; 
 }
-/* Style for labels in the profile form */
+
 .profile-form-label {
   text-align: center;
-  font-size: 14px; /* Adjust the size as needed */
+  font-size: 14px; 
   color: var(--text-color);
   margin-bottom: 5px;
 }
 
-/* Style for input fields in the profile form */
 .profile-form-input {
   width: 100%;
-  max-width: 200px; /* Adjust the max width if needed */
+  max-width: 200px; 
   margin-bottom: 1em;
 }
 
-/* Ensure the input fields are centered and have proper padding */
 .profile-form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Adjust the container to center content */
 .profile-form-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto; /* Center align */
-  padding: 20px; /* Add padding if needed */
+  margin: 0 auto; 
+  padding: 20px; 
 }
 .hero-banner {
   text-align: center;
