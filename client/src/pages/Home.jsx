@@ -3,11 +3,12 @@ import RecipeSearch from '../components/RecipeSearch';
 import SignupForm from './Register';
 import RecipeList from '../components/RecipeList';
 import '../styles/styles.css';
-import Auth from '../utils/auth'; // Import the Auth utility
+import Auth from '../utils/auth'; 
 
 const Home = () => {
+   // State to store the list of recipes
   const [recipes, setRecipes] = useState([]);
-
+  // Handler to update the recipes state
   const recipeHandler = (array) => {
     setRecipes(array);
   };

@@ -4,34 +4,43 @@ require ("dotenv").config()
 const secret = process.env.JWT_SECRET
 const expiration = '2h';
 
-const authMiddleware = ({req}) => {
-    let token = req.body.token || req.query.token || req.headers.authorization;
+// Middleware function to authenticate requests
+const authMiddleware = ({ req }) => {
+  // Get the token from the request body, query, or headers
+  let token = req.body.token || req.query.token || req.headers.authorization;
 
-    if (req.headers.authorization) {
-        token = token.split(' ').pop().trim();
-      }
+  // If the token is in the authorization header, format it correctly
+  if (req.headers.authorization) {
+    token = token.split(' ').pop().trim();
+  }
+
+  // If no token is found, return the request object as is
   if (!token) {
     return req;
   }
 
   try {
-    const { data } = jwt.verify(token, process.env.JWT_SECRET, { maxAge: expiration }) 
-    req.user = data;
+    // Verify the token and extract the user data
+    const { data } = jwt.verify(token, secret, { maxAge: expiration });
+    req.user = data; // Attach the user data to the request object
   } catch {
-    console.log('Invalid token');
+    console.log('Invalid token'); 
   }
-  return req;
+
+  return req; 
 };
 
+// Function to sign a new token
 const signToken = ({ email, username, _id }) => {
-    const payload = { email, username, _id };
-    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  const payload = { email, username, _id }; // Create a payload with user details
+  return jwt.sign({ data: payload }, secret, { expiresIn: expiration }); // Sign the token with the secret key and set the expiration time
 }
 
+// Create a new GraphQLError for authentication failures
 const authenticationError = new GraphQLError('Could not authenticate user.', {
-    extensions: {
-      code: 'UNAUTHENTICATED',
-    },
-  })
+  extensions: {
+    code: 'UNAUTHENTICATED',
+  },
+});
 
-module.exports = {authMiddleware, signToken, authenticationError}
+module.exports = { authMiddleware, signToken, authenticationError }; 

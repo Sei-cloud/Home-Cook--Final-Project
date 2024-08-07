@@ -6,7 +6,6 @@ import Auth from '../utils/auth';
 const MyFavorites = ({ recipe, isFavorite, refetch }) => {
 
   const [removeFavoriteRecipe, {error: removeRecipeError}] = useMutation(REMOVE_FAVORITE_RECIPE);
-  // console.log(recipe)
 
   const handleRemoveFavorite = async () => {
     try {

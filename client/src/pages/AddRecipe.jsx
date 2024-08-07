@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Form, Button, Message, Container } from 'semantic-ui-react';
 import { ADD_USER_RECIPE } from '../utils/mutations';
-import Auth from '../utils/auth';
 
 const AddRecipe = () => {
+    // State to manage form inputs
   const [formState, setFormState] = useState({
     name: '',
     ingredients: '',
@@ -15,6 +15,7 @@ const AddRecipe = () => {
   const [addUserRecipe, { error }] = useMutation(ADD_USER_RECIPE);
   const [successMessage, setSuccessMessage] = useState('');
 
+  // Handle change for text inputs
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormState({
@@ -23,6 +24,7 @@ const AddRecipe = () => {
     });
   };
 
+  // Handle change for file input
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFormState({

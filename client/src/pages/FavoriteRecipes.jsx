@@ -8,8 +8,10 @@ const FavoriteRecipes = () => {
   const { loading, data, refetch } = useQuery(QUERY_USER, {
     variables: { username: Auth.getProfile().data.username },
   });
+   // State to manage the list of favorite recipes
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-
+  
+ // useEffect hook to update the favorite recipes when data changes
   useEffect(() => {
     if (data) {
       setFavoriteRecipes(data.user.favoriteRecipes);
