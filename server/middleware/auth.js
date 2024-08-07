@@ -2,7 +2,6 @@ const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 require ("dotenv").config()
 const secret = process.env.JWT_SECRET
-console.log('SECRET', secret)
 const expiration = '2h';
 
 const authMiddleware = ({req}) => {
@@ -11,7 +10,6 @@ const authMiddleware = ({req}) => {
     if (req.headers.authorization) {
         token = token.split(' ').pop().trim();
       }
-
   if (!token) {
     return req;
   }
