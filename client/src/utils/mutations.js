@@ -26,6 +26,12 @@ export const LOGIN_USER = gql`
   }
 `;
 
+export const DELETE_USER = gql`
+  mutation deleteUser($username: String!) {
+    deleteUser(username: $username)
+  }
+`;
+
 export const ADD_FAVORITE_RECIPE = gql`
   mutation AddFavoriteRecipe($recipeData: RecipeInput!) {
   addFavoriteRecipe(recipeData: $recipeData) {

@@ -17,10 +17,9 @@ const resolvers = {
   },
   Mutation: {
     register: async (_, { username, password, email }) => {
-      console.log('HELLOOO')
+      
       try {
         const user = await User.create({ username, password, email });
-        console.log('USER', user)
         const token = signToken(user);
         return { token, user };
       } catch (error) {
@@ -93,6 +92,18 @@ const resolvers = {
       );
       return updatedUser;
     },
+    deleteUser: async (parent, { username }, context) => {
+      if (context.user) {
+        try {
+          await User.deleteOne({ username });
+          return true;
+        } catch (err) {
+          console.error(err);
+          return false;
+        }
+      }
+      throw new AuthenticationError('Not logged in');
+    }
   },
 };
 module.exports = resolvers;

@@ -1,4 +1,4 @@
-const typeDefs =`
+const typeDefs = `
   type User {
     _id: ID!
     username: String
@@ -14,7 +14,7 @@ const typeDefs =`
     sourceUrl: String
     createdBy: User
   }
-    input RecipeInput {
+  input RecipeInput {
     name: String
     ingredients: [String]
     instructions: String
@@ -28,7 +28,7 @@ const typeDefs =`
   type Query {
     message: String
     user(username: String!): User
-     userRecipes: [Recipe]
+    userRecipes: [Recipe]
   }
   type Mutation {
     register(username: String!, password: String!, email: String!): Auth
@@ -36,7 +36,8 @@ const typeDefs =`
     addFavoriteRecipe(recipeData: RecipeInput!): User
     removeFavoriteRecipe(recipeId: ID!): User
     addUserRecipe(recipeData: RecipeInput!): Recipe
-     updateUser(username: String!, email: String!): User
+    updateUser(username: String!, email: String!): User
+    deleteUser(username: String!): Boolean
   }
 `;
 module.exports = typeDefs;

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Modal } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 const Login = () => {
   const [formState, setFormState] = useState({
@@ -11,7 +10,7 @@ const Login = () => {
     password: '',
   });
   const [loginUser, { error }] = useMutation(LOGIN_USER);
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,49 +23,63 @@ const Login = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      // Log the form state to check the payload being sent
-      console.log(formState);
-
       const { data } = await loginUser({
         variables: { ...formState },
       });
-      console.log(data); // Log the response data
+
       Auth.login(data.login.token);
-      navigate('/profile'); // Redirect to profile page after login
     } catch (e) {
       console.error(e);
+      setModalOpen(true); // Open the modal on error
     }
   };
 
+  const handleClose = () => setModalOpen(false);
+
   return (
-    <Form onSubmit={handleFormSubmit}>
-      <Form.Input
-        label="Email"
-        className="form-input"
-        placeholder="Your email"
-        name="email"
-        type="email"
-        value={formState.email}
-        onChange={handleChange}
-      />
-      <Form.Input
-        label="Password"
-        className="form-input"
-        placeholder="******"
-        name="password"
-        type="password"
-        value={formState.password}
-        onChange={handleChange}
-      />
-      <Button
-        className="btn btn-block btn-primary"
-        style={{ cursor: 'pointer' }}
-        type="submit"
+    <>
+      <Form onSubmit={handleFormSubmit}>
+        <Form.Input
+          label="Email"
+          placeholder="Your email"
+          name="email"
+          type="email"
+          value={formState.email}
+          onChange={handleChange}
+        />
+        <Form.Input
+          label="Password"
+          placeholder="******"
+          name="password"
+          type="password"
+          value={formState.password}
+          onChange={handleChange}
+        />
+        <Button
+          className="btn btn-block btn-primary"
+          style={{ cursor: 'pointer' }}
+          type="submit"
+        >
+          Submit
+        </Button>
+      </Form>
+
+      <Modal
+        open={modalOpen}
+        onClose={handleClose}
+        size="small"
       >
-        Submit
-      </Button>
-      {error && <div>Login failed</div>}
-    </Form>
+        <Modal.Header>Login Failed</Modal.Header>
+        <Modal.Content>
+          <p>Wrong username or password</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={handleClose} negative>
+            Close
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    </>
   );
 };
 

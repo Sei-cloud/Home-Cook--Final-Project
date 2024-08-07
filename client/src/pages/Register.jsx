@@ -1,4 +1,3 @@
-// src/pages/Register.jsx
 import React, { useState } from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
@@ -27,11 +26,19 @@ const Register = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    setErrorMessages({ username: '', email: '' }); // Reset error messages
+
     try {
       const { data } = await registerUser({
         variables: { ...formState },
       });
-      Auth.login(data.register.token);
+
+      if (data && data.register && data.register.token) {
+        Auth.login(data.register.token);
+      } else {
+        // Handle the case where data is not returned as expected
+        throw new Error('Registration failed');
+      }
     } catch (e) {
       console.error(e);
 
@@ -42,11 +49,16 @@ const Register = () => {
       if (e.message.includes('Email')) {
         setErrorMessages((prev) => ({ ...prev, email: 'Email is already taken' }));
       }
+
+      // General error handling
+      if (!e.message.includes('Username') && !e.message.includes('Email')) {
+        setErrorMessages((prev) => ({ ...prev, general: 'Registration failed. Please try again.' }));
+      }
     }
   };
 
   return (
-    <Form onSubmit={handleFormSubmit}>
+    <Form onSubmit={handleFormSubmit} error={!!errorMessages.general}>
       <Form.Input
         label="Username"
         placeholder="Your username"
@@ -78,6 +90,7 @@ const Register = () => {
       />
       
       <Button type="submit">Submit</Button>
+      {errorMessages.general && <Message error content={errorMessages.general} />}
     </Form>
   );
 };
