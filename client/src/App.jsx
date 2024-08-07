@@ -7,8 +7,6 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
-import RecipeSearch from './components/RecipeSearch';
-import RecipeList from './components/RecipeList';
 import Navbar from './components/Navbar';
 import './styles/styles.css';
 
@@ -39,18 +37,12 @@ const client = new ApolloClient({
 const App = () => {
   const [recipes, setRecipes] = useState([]);
 
-  // const handleSearchResults = (results) => {
-  //   setRecipes(results);
-  // };
 
   return (
     <ApolloProvider client={client}>
     <div className="App">
       <Navbar />
       <div className="container">
-        {/* <h1>Home-Cook</h1> */}
-        {/* <RecipeSearch onSearchResults={handleSearchResults} />
-        <RecipeList recipes={recipes} /> */}
         <Outlet/>
       </div>
     </div>

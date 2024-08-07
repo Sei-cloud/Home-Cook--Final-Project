@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_FAVORITE_RECIPE, REMOVE_FAVORITE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
 import { Button, Modal } from 'semantic-ui-react';
 
 const RecipeCard = ({ recipe, isFavorite, refetch, onRemoveFavorite }) => {
-    // useMutation hooks to add or remove a favorite recipe
   const [addFavoriteRecipe, { error: addRecipeError }] = useMutation(ADD_FAVORITE_RECIPE);
   const [removeFavoriteRecipe, { error: removeRecipeError }] = useMutation(REMOVE_FAVORITE_RECIPE);
   const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState('');
 
+  // Handle adding a favorite recipe
   const handleAddFavorite = async () => {
     try {
-      // If user is not logged in, show message and stop
       if (!Auth.loggedIn()) {
+        setMessage('You need to be logged in to add or remove recipes from favorites.');
         setShowMessage(true);
         return;
       }
-      // Create an object with recipe data
+
+      if (isFavorite) {
+        setMessage('Recipe is already in your favorites!');
+        setShowMessage(true);
+        return;
+      }
+
       const recipeData = {
         name: recipe.strMeal || recipe.name,
         ingredients: recipe.ingredients || [],
@@ -25,36 +32,50 @@ const RecipeCard = ({ recipe, isFavorite, refetch, onRemoveFavorite }) => {
         imageUrl: recipe.strMealThumb || recipe.imageUrl,
         sourceUrl: recipe.strSource || recipe.sourceUrl,
       };
-      const { data } = await addFavoriteRecipe({
+
+      await addFavoriteRecipe({
         variables: { recipeData },
       });
-      console.log(data);
-      alert('Recipe added to favorites!');
-      // Refresh data if refetch function is provided, allows page to refresh promptly for user
+
+      setMessage('Recipe added to favorites!');
+      setShowMessage(true);
       if (refetch) refetch();
     } catch (e) {
       console.error(e);
-      alert('Failed to add recipe to favorites.');
+      setMessage('Failed to add recipe to favorites. It might already added.');
+      setShowMessage(true);
     }
   };
 
+  // Handle removing a favorite recipe
   const handleRemoveFavorite = async () => {
     try {
       if (!Auth.loggedIn()) {
+        setMessage('You need to be logged in to add or remove recipes from favorites.');
         setShowMessage(true);
         return;
       }
-      const { data } = await removeFavoriteRecipe({
+
+      await removeFavoriteRecipe({
         variables: { recipeId: recipe._id },
       });
-      alert('Recipe removed from favorites!');
+
+      setMessage('Recipe removed from favorites!');
+      setShowMessage(true);
       onRemoveFavorite(recipe._id);
       if (refetch) refetch();
     } catch (e) {
       console.error(e);
-      alert('Failed to remove recipe from favorites.');
+      setMessage('Failed to remove recipe from favorites.');
+      setShowMessage(true);
     }
   };
+
+  // Ensure the favorite state is accurate
+  useEffect(() => {
+    // This ensures that the component reflects the correct favorite state
+    setMessage('');
+  }, [isFavorite]);
 
   return (
     <div className="recipe-card">
@@ -66,20 +87,22 @@ const RecipeCard = ({ recipe, isFavorite, refetch, onRemoveFavorite }) => {
         </a>
       </p>
       {isFavorite ? (
-        <Button onClick={handleRemoveFavorite}>Remove from Favorites</Button>
+        <Button onClick={handleRemoveFavorite} color="red">
+          Remove from Favorites
+        </Button>
       ) : (
-        <Button onClick={handleAddFavorite}>Add to Favorites</Button>
+        <Button onClick={handleAddFavorite} color="green">
+          Add to Favorites
+        </Button>
       )}
 
-      <Modal open={showMessage} onClose={() => setShowMessage(false)}>
-        <Modal.Header>Login Required</Modal.Header>
+      <Modal open={showMessage} onClose={() => setShowMessage(false)} dimmer="blurring">
+        <Modal.Header>Notification</Modal.Header>
         <Modal.Content>
-          <p>You need to be logged in to add or remove recipes from favorites.</p>
+          <p>{message}</p>
         </Modal.Content>
         <Modal.Actions>
-          <Button color="red" onClick={() => setShowMessage(false)}>
-            Close
-          </Button>
+          <Button onClick={() => setShowMessage(false)}>Close</Button>
         </Modal.Actions>
       </Modal>
     </div>
