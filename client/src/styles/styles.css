@@ -176,3 +176,26 @@
   font-size: 20px;
   cursor: pointer;
 }
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  color: white;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer .github-links a, span {
+  color: rgb(28, 51, 30);
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.footer .github-links a:hover {
+  text-decoration: underline;
+}
