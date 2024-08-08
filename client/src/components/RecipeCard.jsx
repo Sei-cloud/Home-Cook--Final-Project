@@ -42,7 +42,7 @@ const RecipeCard = ({ recipe, isFavorite, refetch, onRemoveFavorite }) => {
       if (refetch) refetch();
     } catch (e) {
       console.error(e);
-      setMessage('Failed to add recipe to favorites. It might already added.');
+      setMessage('Failed to add recipe to favorites. It might have already added.');
       setShowMessage(true);
     }
   };
@@ -88,10 +88,10 @@ const RecipeCard = ({ recipe, isFavorite, refetch, onRemoveFavorite }) => {
       </p>
       {isFavorite ? (
         <Button onClick={handleRemoveFavorite} color="red">
-          Remove from Favorites
+          Remove
         </Button>
       ) : (
-        <Button onClick={handleAddFavorite} color="green">
+        <Button onClick={handleAddFavorite}>
           Add to Favorites
         </Button>
       )}

@@ -40,14 +40,6 @@
   background-color: white; 
 }
 
-.recipe-search button {
-  padding: 10px 20px;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
 .recipe-list {
   display: flex;
   flex-wrap: wrap;
