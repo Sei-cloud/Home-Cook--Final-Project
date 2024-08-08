@@ -1,15 +1,15 @@
-const bcrypt = require('bcryptjs');
-const {signToken, authorizationError} = require ('../middleware/auth');
-const User = require ('../models/User');
-const Recipe = require('../models/Recipe');
+const bcrypt = require("bcryptjs");
+const { signToken, authorizationError } = require("../middleware/auth");
+const User = require("../models/User");
+const Recipe = require("../models/Recipe");
 
 const resolvers = {
   Query: {
-    message: () => 'Hello, world!',
+    message: () => "Hello, world!",
 
     // Query to get a user by username and populate their favorite recipes
     user: async (_, { username }) => {
-      return User.findOne({ username }).populate('favoriteRecipes');
+      return User.findOne({ username }).populate("favoriteRecipes");
     },
 
     // Query to get recipes created by the authenticated user
@@ -18,31 +18,30 @@ const resolvers = {
     },
   },
 
-  
   Mutation: {
     // Mutation to register a new user
     register: async (_, { username, password, email }) => {
       try {
-        const user = await User.create({ username, password, email }); 
-        const token = signToken(user); 
-        return { token, user }; 
+        const user = await User.create({ username, password, email });
+        const token = signToken(user);
+        return { token, user };
       } catch (error) {
-        console.log(error); 
+        console.log(error);
       }
     },
 
     // Mutation to log in a user
     login: async (_, { email, password }) => {
-      const user = await User.findOne({ email }); 
+      const user = await User.findOne({ email });
       if (!user) {
-        throw new Error('User not found'); 
+        throw new Error("User not found");
       }
       const valid = await bcrypt.compare(password, user.password); // Compare the provided password with the stored hashed password
       if (!valid) {
-        throw new Error('Incorrect password'); 
+        throw new Error("Incorrect password");
       }
-      const token = signToken(user); 
-      return { token, user }; 
+      const token = signToken(user);
+      return { token, user };
     },
 
     // Mutation to add a favorite recipe for the authenticated user
@@ -51,15 +50,33 @@ const resolvers = {
         throw authorizationError; // Throw an authorization error if the user is not authenticated
       }
       try {
-        const recipe = await Recipe.create(recipeData); // Create a new recipe
-        const user = await User.findByIdAndUpdate(
-          context.user._id,
-          { $push: { favoriteRecipes: recipe._id } }, // Add the recipe to the user's favorite recipes
-          { new: true }
-        );
-        return user; // Return the updated user
+        // Check if the recipe already exists in the user's favorites
+        const user = await User.findById(context.user._id);
+        const existingRecipe = await Recipe.findOne({
+          name: recipeData.name,
+          imageUrl: recipeData.imageUrl,
+        });
+        if (!existingRecipe) {
+          // Create the recipe if it doesn't already exist
+          const newRecipe = await Recipe.create(recipeData);
+          await User.findByIdAndUpdate(
+            context.user._id,
+            { $push: { favoriteRecipes: newRecipe._id } },
+            { new: true }
+          );
+          return user; // Return the updated user
+        } else if (user.favoriteRecipes.includes(existingRecipe._id)) {
+          throw new Error("Recipe is already in favorites");
+        } else {
+          await User.findByIdAndUpdate(
+            context.user._id,
+            { $push: { favoriteRecipes: existingRecipe._id } },
+            { new: true }
+          );
+          return user; // Return the updated user
+        }
       } catch (error) {
-        throw new Error(error); // Throw an error if something goes wrong
+        throw new Error(error.message); // Throw an error if something goes wrong
       }
     },
 
@@ -117,9 +134,9 @@ const resolvers = {
           return false; // Return false if an error occurs
         }
       }
-      throw new AuthenticationError('Not logged in'); 
-    }
+      throw new AuthenticationError("Not logged in");
+    },
   },
 };
 
-module.exports = resolvers; 
+module.exports = resolvers;

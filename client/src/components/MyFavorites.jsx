@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { REMOVE_FAVORITE_RECIPE } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { Button, Modal } from 'semantic-ui-react';
 
-const MyFavorites = ({ recipe, isFavorite, refetch }) => {
-
-  const [removeFavoriteRecipe, {error: removeRecipeError}] = useMutation(REMOVE_FAVORITE_RECIPE);
+const MyFavorites = ({ recipe, refetch }) => {
+  const [removeFavoriteRecipe, { error: removeRecipeError }] = useMutation(REMOVE_FAVORITE_RECIPE);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleRemoveFavorite = async () => {
     try {
       if (!Auth.loggedIn()) {
         return;
       }
-      const { data } = await removeFavoriteRecipe({
+      await removeFavoriteRecipe({
         variables: { recipeId: recipe._id },
       });
-      alert('Recipe removed from favorites!');
       if (refetch) refetch();
+      setModalOpen(false);
     } catch (e) {
       console.error(e);
       alert('Failed to remove recipe from favorites.');
@@ -26,22 +27,41 @@ const MyFavorites = ({ recipe, isFavorite, refetch }) => {
   return (
     <div className="recipe-card">
       <h2>{recipe.strMeal || recipe.name}</h2>
-      <img src={recipe.strMealThumb || recipe.imageUrl || `/recipe-placeholder.jpg`} alt={recipe.strMeal || recipe.name} />
+      <img
+        src={recipe.strMealThumb || recipe.imageUrl || `/recipe-placeholder.jpg`}
+        alt={recipe.strMeal || recipe.name}
+      />
       <p>
         <a href={recipe.strSource || recipe.sourceUrl} target="_blank" rel="noopener noreferrer">
           Recipe Source
         </a>
       </p>
-      {recipe?.ingredients.length && (recipe.ingredients.map((ingredient, index)=>(
-        <p key={index}>
-            {ingredient}
-        </p>
-      )))}
-      <p>
-        {recipe.instructions ? recipe.instructions: ""}
-      </p>
-      
-        <button onClick={handleRemoveFavorite}>Remove from Favorites</button>
+      {recipe?.ingredients.length &&
+        recipe.ingredients.map((ingredient, index) => (
+          <p key={index}>{ingredient}</p>
+        ))}
+      <p>{recipe.instructions ? recipe.instructions : ''}</p>
+      <Button color="red" onClick={() => setModalOpen(true)}>
+        Remove
+      </Button>
+
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        size="small"
+        dimmer="blurring"
+      >
+        <Modal.Header>Confirm Removal</Modal.Header>
+        <Modal.Content>
+          <p>Are you sure you want to remove this recipe from your favorites?</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+          <Button color="red" onClick={handleRemoveFavorite}>
+            Remove
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </div>
   );
 };

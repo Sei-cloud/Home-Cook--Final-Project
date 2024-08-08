@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER_RECIPES } from '../utils/queries';
 import MyFavorites from '../components/MyFavorites'
-import Auth from '../utils/auth';
+
 
 const AddedRecipes = () => {
   const { loading, data, refetch } = useQuery(QUERY_USER_RECIPES);
-
-  //   removed this line: variables: { userId: Auth.getProfile().data._id },
 
   const [userRecipes, setUserRecipes] = useState([]);
 
