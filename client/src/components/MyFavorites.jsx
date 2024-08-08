@@ -31,11 +31,7 @@ const MyFavorites = ({ recipe, refetch }) => {
         src={recipe.strMealThumb || recipe.imageUrl || `/recipe-placeholder.jpg`}
         alt={recipe.strMeal || recipe.name}
       />
-      <p>
-        <a href={recipe.strSource || recipe.sourceUrl} target="_blank" rel="noopener noreferrer">
-          Recipe Source
-        </a>
-      </p>
+
       {recipe?.ingredients.length &&
         recipe.ingredients.map((ingredient, index) => (
           <p key={index}>{ingredient}</p>
