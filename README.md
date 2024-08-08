@@ -122,7 +122,4 @@ Contributions are welcome! Please follow these steps:
   * [Sam Cowman](https://github.com/Sam-Cowman)
   * [Sei](https://github.com/Sei-cloud)
   
-  ### Email: 
-  * [Charlie Boyle](charlieboyle252@gmail.com)
-  * [Sam Cowman](sam.p.cowman@gmail.com)
   
