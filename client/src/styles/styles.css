@@ -9,7 +9,7 @@
 .container {
   text-align: center;
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: black;
   padding: 0px 2px 2px 2px;
   min-height: 100vh; 
 }
@@ -111,7 +111,7 @@
 }
 .hero-banner {
   text-align: center;
-  color: var(--text-color);
+  color: black;
   padding: 50px 20px;
   margin-bottom: 20px;
 }
